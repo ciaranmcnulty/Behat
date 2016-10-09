@@ -8,9 +8,9 @@ cache:
   directories:
     - $HOME/.composer/cache
 
-branches:
-  only:
-    - master
+#branches:
+#  only:
+#    - master
 
 matrix:
   include:
