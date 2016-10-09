@@ -43,7 +43,7 @@ script:
   - behat -fprogress --strict --tags '~@php-version,'`php php_version_tags.php`
 
 before_deploy:
-  - rm -rf vendor bin
+  - rm -rf vendor
   - composer install --no-dev -o
   - curl -LSs https://box-project.github.io/box2/installer.php | php
   - chmod +x box.phar
