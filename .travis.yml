@@ -41,3 +41,21 @@ before_script:
 script:
   - phpunit
   - behat -fprogress --strict --tags '~@php-version,'`php php_version_tags.php`
+
+before_deploy:
+  - rm -rf vendor bin
+  - composer install --no-dev -o
+  - curl -LSs https://box-project.github.io/box2/installer.php | php
+  - chmod +x box.phar
+  - php box.phar build
+
+deploy:
+  provider: releases
+  api_key:
+    secure: kuNoMV1YPvdIQvKwf7NgYIFP4ZskFrZCRgq/+iTzP/vbyeB1mu/hyNkHtdl0Fj/2LpN1IcWm+C7hZ29NjQJGyrEkGnD8HWnUEn6k+FLhETg+BlckDTwSyhauXRIoaJeNUItNYFydG8MjEMBQgWQpsT6lWNSRAa3uC82K2zjQAx0=
+  file: behat.phar
+  skip_cleanup: true
+  on:
+    tags: true
+    php: 5.6
+    condition: $SYMFONY_VERSION = '2.8.*'
